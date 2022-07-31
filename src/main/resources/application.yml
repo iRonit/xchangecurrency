@@ -1,0 +1,252 @@
+data:
+  currencies:
+    ALL:
+      Albanian Lek
+    DZD:
+      Algerian Dinar
+    ARS:
+      Argentine Peso
+    AWG:
+      Aruba Florin
+    AUD:
+      Australian Dollar
+    BSD:
+      Bahamian Dollar
+    BHD:
+      Bahraini Dinar
+    BDT:
+      Bangladesh Taka
+    BBD:
+      Barbadian Dollar
+    BYR:
+      Belarus Ruble
+    BZD:
+      Belize Dollar
+    BMD:
+      Bermuda Dollar
+    BTN:
+      Bhutan Ngultrum
+    BOB:
+      Bolivian Boliviano
+    BRL:
+      Brazilian Real
+    GBP:
+      British Pound
+    BND:
+      Brunei Dollar
+    BGN:
+      Bulgarian Lev
+    BIF:
+      Burundi Franc
+    CAD:
+      Canadian Dollar
+    KYD:
+      Cayman Islands Dollar
+    XAF:
+      Central African CFA franc
+    CLP:
+      Chilean Peso
+    CNY:
+      Chinese Yuan
+    COP:
+      Colombian Peso
+    KMF:
+      Comoros Franc
+    CRC:
+      Costa Rica Colon
+    HRK:
+      Croatian Kuna
+    CYP:
+      Cyprus Pound
+    CZK:
+      Czech Koruna
+    DKK:
+      Danish Krone
+    DOP:
+      Dominican Peso
+    XCD:
+      East Caribbean Dollar
+    EGP:
+      Egyptian Pound
+    SVC:
+      El Salvador Colon
+    EEK:
+      Estonian Kroon
+    ETB:
+      Ethiopian BirrEuro
+    EUR:
+      Euro
+    FJD:
+      Fiji Dollar
+    GMD:
+      Gambian Dalasi
+    GTQ:
+      Guatemala Quetzal
+    GNF:
+      Guinea Franc
+    HTG:
+      Haiti Gourde
+    HNL:
+      Honduras Lempira
+    HKD:
+      Hong Kong Dollar
+    HUF:
+      Hungarian Forint
+    ISK:
+      Icelandic Krona
+    INR:
+      Indian Rupee
+    IDR:
+      Indonesian Rupiah
+    IRR:
+      Iran Rial
+    IQD:
+      Iraqi Dinar
+    ILS:
+      Israeli Sheqel
+    JMD:
+      Jamaican Dollar
+    JPY:
+      Japanese Yen
+    JOD:
+      Jordanian Dinar
+    KZT:
+      Kazakhstan Tenge
+    KES:
+      Kenyan Shilling
+    KWD:
+      Kuwaiti Dinar
+    LVL:
+      Latvian Lats
+    LBP:
+      Lebanese Pound
+    LSL:
+      Lesotho Loti
+    LTL:
+      Lithuanian Litas
+    MOP:
+      Macau Pataca
+    MKD:
+      Macedonian Denar
+    MWK:
+      Malawi Kwacha
+    MYR:
+      Malaysian Ringgit
+    MVR:
+      Maldives Rufiyaa
+    MRO:
+      Mauritania Ougulya
+    MUR:
+      Mauritius Rupee
+    MXN:
+      Mexican Peso
+    MDL:
+      Moldovan Leu
+    MNT:
+      Mongolian Tugrik
+    MAD:
+      Moroccan Dirham
+    NAD:
+      Namibian Dollar
+    NPR:
+      Nepalese Rupee
+    ANG:
+      Neth Antilles Guilder
+    NZD:
+      New Zealand Dollar
+    NIO:
+      Nicaragua Cordoba
+    NGN:
+      Nigerian Naira
+    NOK:
+      Norwegian Krone
+    OMR:
+      Omani Rial
+    XPF:
+      Pacific Franc
+    PKR:
+      Pakistani Rupee
+    PAB:
+      Panamanian Balboa
+    PGK:
+      Papua New Guinea Kina
+    PYG:
+      Paraguayan Guarani
+    PEN:
+      Peruvian Nuevo Sol
+    PHP:
+      Philippine Peso
+    PLN:
+      Polish Zloty
+    QAR:
+      Qatari Riyal
+    RON:
+      Romanian Leu
+    RUB:
+      Russian Rouble
+    RWF:
+      Rwanda Franc
+    WST:
+      Samoa Tala
+    SAR:
+      Saudi Riyal
+    SCR:
+      Seychelles Rupee
+    SLL:
+      Sierra Leone Leone
+    SGD:
+      Singapore Dollar
+    SKK:
+      Slovak Koruna
+    SIT:
+      Slovenian Tolar
+    SBD:
+      Solomon Islands Dollar
+    ZAR:
+      South African Rand
+    KRW:
+      South Korean Won
+    LKR:
+      Sri Lankan Rupee
+    SDD:
+      Sudanese Dinar
+    SZL:
+      Swaziland Lilageni
+    SEK:
+      Swedish Krona
+    CHF:
+      Swiss Franc
+    TWD:
+      Taiwan Dollar
+    TZS:
+      Tanzanian Shilling
+    THB:
+      Thai Baht
+    TOP:
+      Tonga Paanga
+    TTD:
+      Trinidad Tobago Dollar
+    TND:
+      Tunisian Dinar
+    TRY:
+      Turkish Lira
+    UGX:
+      Ugandan Shilling
+    UAH:
+      Ukraine Hryvnia
+    AED:
+      United Arab Emirates Dirham
+    UYU:
+      Uruguayan New Peso
+    USD:
+      US Dollar
+    VUV:
+      Vanuatu Vatu
+    VEF:
+      Venezuelan bolivar
+    XOF:
+      West African CFA franc
+    YER:
+      Yemen Riyal
+    ZMK:
+      Zambian Kwacha

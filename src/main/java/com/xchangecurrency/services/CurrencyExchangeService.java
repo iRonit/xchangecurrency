@@ -1,5 +1,6 @@
 package com.xchangecurrency.services;
 
+import com.xchangecurrency.configs.CurrenciesProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,11 @@ import static java.util.regex.Pattern.MULTILINE;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.springframework.http.HttpMethod.GET;
 
+/**
+ * Handles the logic around Currency Exchange.
+ *
+ * @author Ronit Pradhan
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -21,9 +27,11 @@ public class CurrencyExchangeService {
     private static final String CURRENCY_ME_UK_URL = "https://www.currency.me.uk/convert/";
 
     private final RestTemplate restTemplate;
+    private final CurrenciesProperties currenciesProperties;
 
     public float getExchangeRate(final String frmCurr, final String toCurr) throws Exception {
         // Validation
+        validateGetExchangeRateRequest(frmCurr, toCurr);
 
         // if data available in cache, return the value
 
@@ -34,6 +42,32 @@ public class CurrencyExchangeService {
         return fetchCurrentExchangeRate(frmCurr, toCurr);
     }
 
+    /**
+     * Validate the currencies in the request parameter.
+     *
+     * @param frmCurr From Currency
+     * @param toCurr  To Currency
+     * @throws IllegalArgumentException if the currencies are not supported
+     */
+    private void validateGetExchangeRateRequest(final String frmCurr, final String toCurr) throws IllegalArgumentException {
+        if (!currenciesProperties.getCurrencies().containsKey(frmCurr.toUpperCase())) {
+            log.error("From Currency is not present in the data-map: {}", frmCurr);
+            throw new IllegalArgumentException("Unsupported currency: " + frmCurr);
+        }
+        if (!currenciesProperties.getCurrencies().containsKey(toCurr.toUpperCase())) {
+            log.error("To Currency is not present in the data-map: {}", toCurr);
+            throw new IllegalArgumentException("Unsupported currency: " + toCurr);
+        }
+    }
+
+    /**
+     * Fetch and Parse the Current Currency Exchange Rate
+     *
+     * @param frmCurr From Currency
+     * @param toCurr  To Currency
+     * @return the current exchange rate
+     * @throws Exception
+     */
     private float fetchCurrentExchangeRate(final String frmCurr, final String toCurr) throws Exception {
         // Fetch the html content that has the currency exchange rate info
         String response = fireApiCallToExternal(frmCurr, toCurr);
