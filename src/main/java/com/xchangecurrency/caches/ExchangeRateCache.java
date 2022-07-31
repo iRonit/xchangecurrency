@@ -1,4 +1,4 @@
-package caches;
+package com.xchangecurrency.caches;
 
 public class ExchangeRateCache {
 }
