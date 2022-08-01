@@ -2,6 +2,8 @@ package com.xchangecurrency.services;
 
 import com.xchangecurrency.configs.CurrenciesProperties;
 import com.xchangecurrency.configs.CurrencyExchangeConfig;
+import com.xchangecurrency.dtos.Currency;
+import com.xchangecurrency.dtos.ExchangeRateGet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -11,6 +13,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,12 +48,16 @@ public class CurrencyExchangeService {
      * @throws Exception if there's any issue while fetching from the external source
      */
     @Cacheable
-    public float getExchangeRate(@NonNull final String frmCurr, @NonNull final String toCurr) throws Exception {
+    public ExchangeRateGet getExchangeRate(@NonNull final String frmCurr, @NonNull final String toCurr) throws Exception {
         // Validation
         validateGetExchangeRateRequest(frmCurr, toCurr);
 
         // Fetch and Return
-        return fetchCurrentExchangeRate(frmCurr, toCurr);
+        return ExchangeRateGet.builder()
+                .fromCurrency(Currency.builder().code(frmCurr.toUpperCase()).name(currenciesProperties.getCurrencies().get(frmCurr.toUpperCase())).build())
+                .toCurrency(Currency.builder().code(toCurr.toUpperCase()).name(currenciesProperties.getCurrencies().get(toCurr.toUpperCase())).build())
+                .amount(fetchCurrentExchangeRate(frmCurr, toCurr))
+                .lastUpdated(Date.from(Instant.now())).build();
     }
 
     /**

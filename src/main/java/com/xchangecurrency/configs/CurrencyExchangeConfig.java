@@ -17,7 +17,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 @Configuration
 public class CurrencyExchangeConfig {
 
-    public final static String CURRENCIES_CACHE = "currencies_cache";
+    public static final String CURRENCIES_CACHE = "currencies_cache";
 
     @Bean
     public RestTemplate restTemplate() {
@@ -30,7 +30,9 @@ public class CurrencyExchangeConfig {
             @Override
             @NonNull
             protected Cache createConcurrentMapCache(@NonNull final String name) {
-                return new ConcurrentMapCache(name, CacheBuilder.newBuilder().expireAfterWrite(15, MINUTES).maximumSize(1000).build().asMap(), false);
+                return new ConcurrentMapCache(name,
+                        CacheBuilder.newBuilder().expireAfterWrite(15, MINUTES).maximumSize(1000).build().asMap(),
+                        false);
             }
         };
         cacheManager.setCacheNames(List.of(CURRENCIES_CACHE));
