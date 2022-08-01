@@ -1,9 +1,13 @@
 package com.xchangecurrency.services;
 
 import com.xchangecurrency.configs.CurrenciesProperties;
+import com.xchangecurrency.configs.CurrencyExchangeConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +24,7 @@ import static org.springframework.http.HttpMethod.GET;
  * @author Ronit Pradhan
  */
 @Service
+@CacheConfig(cacheNames = CurrencyExchangeConfig.CURRENCIES_CACHE)
 @RequiredArgsConstructor
 @Slf4j
 public class CurrencyExchangeService {
@@ -29,16 +34,21 @@ public class CurrencyExchangeService {
     private final RestTemplate restTemplate;
     private final CurrenciesProperties currenciesProperties;
 
-    public float getExchangeRate(final String frmCurr, final String toCurr) throws Exception {
+    /**
+     * Gets the Current Currency Exchange Rate from the External Source
+     * Caches the result
+     *
+     * @param frmCurr From Currency
+     * @param toCurr  To Currency
+     * @return the current currency exchange rate
+     * @throws Exception if there's any issue while fetching from the external source
+     */
+    @Cacheable
+    public float getExchangeRate(@NonNull final String frmCurr, @NonNull final String toCurr) throws Exception {
         // Validation
         validateGetExchangeRateRequest(frmCurr, toCurr);
 
-        // if data available in cache, return the value
-
-        // if not fetch the value
-
-        // cache it
-        // return
+        // Fetch and Return
         return fetchCurrentExchangeRate(frmCurr, toCurr);
     }
 
@@ -50,10 +60,12 @@ public class CurrencyExchangeService {
      * @throws IllegalArgumentException if the currencies are not supported
      */
     private void validateGetExchangeRateRequest(final String frmCurr, final String toCurr) throws IllegalArgumentException {
+        // Validate From Currency
         if (!currenciesProperties.getCurrencies().containsKey(frmCurr.toUpperCase())) {
             log.error("From Currency is not present in the data-map: {}", frmCurr);
             throw new IllegalArgumentException("Unsupported currency: " + frmCurr);
         }
+        // Validate To Currency
         if (!currenciesProperties.getCurrencies().containsKey(toCurr.toUpperCase())) {
             log.error("To Currency is not present in the data-map: {}", toCurr);
             throw new IllegalArgumentException("Unsupported currency: " + toCurr);
@@ -61,12 +73,12 @@ public class CurrencyExchangeService {
     }
 
     /**
-     * Fetch and Parse the Current Currency Exchange Rate
+     * Fetch and Parse the Current Currency Exchange Rate from External Source
      *
      * @param frmCurr From Currency
      * @param toCurr  To Currency
      * @return the current exchange rate
-     * @throws Exception
+     * @throws Exception if the value is unable to be fetched from the external source
      */
     private float fetchCurrentExchangeRate(final String frmCurr, final String toCurr) throws Exception {
         // Fetch the html content that has the currency exchange rate info
