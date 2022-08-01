@@ -49,6 +49,7 @@ public class CurrencyService {
         // Return
         return CurrencyGet.builder()
                 .code(currCode.toUpperCase())
-                .name(currenciesProperties.getCurrencies().get(currCode)).build();
+                .name(currenciesProperties.getCurrencies().get(currCode.toUpperCase()))
+                .build();
     }
 }
