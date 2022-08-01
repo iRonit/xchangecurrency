@@ -2,7 +2,7 @@ package com.xchangecurrency.services;
 
 import com.xchangecurrency.configs.CurrenciesProperties;
 import com.xchangecurrency.configs.CurrencyExchangeConfig;
-import com.xchangecurrency.dtos.Currency;
+import com.xchangecurrency.dtos.CurrencyGet;
 import com.xchangecurrency.dtos.ExchangeRateGet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +54,8 @@ public class CurrencyExchangeService {
 
         // Fetch and Return
         return ExchangeRateGet.builder()
-                .fromCurrency(Currency.builder().code(frmCurr.toUpperCase()).name(currenciesProperties.getCurrencies().get(frmCurr.toUpperCase())).build())
-                .toCurrency(Currency.builder().code(toCurr.toUpperCase()).name(currenciesProperties.getCurrencies().get(toCurr.toUpperCase())).build())
+                .fromCurrency(CurrencyGet.builder().code(frmCurr.toUpperCase()).name(currenciesProperties.getCurrencies().get(frmCurr.toUpperCase())).build())
+                .toCurrency(CurrencyGet.builder().code(toCurr.toUpperCase()).name(currenciesProperties.getCurrencies().get(toCurr.toUpperCase())).build())
                 .amount(fetchCurrentExchangeRate(frmCurr, toCurr))
                 .lastUpdated(Date.from(Instant.now())).build();
     }

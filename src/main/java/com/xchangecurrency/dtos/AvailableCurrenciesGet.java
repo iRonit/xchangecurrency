@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 public class AvailableCurrenciesGet {
     private int total;
-    private List<Currency> availableCurrencies;
+    private List<CurrencyGet> availableCurrencies;
 }

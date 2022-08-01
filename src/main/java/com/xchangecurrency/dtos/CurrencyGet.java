@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Currency {
+public class CurrencyGet {
     private String code;
     private String name;
 }

@@ -9,8 +9,8 @@ import java.util.Date;
 @Builder
 public class ExchangeRateGet {
 
-    private Currency fromCurrency;
-    private Currency toCurrency;
+    private CurrencyGet fromCurrency;
+    private CurrencyGet toCurrency;
     private float amount;
     private Date lastUpdated;
 }
