@@ -44,7 +44,7 @@ public class CurrencyExchangeService {
      *
      * @param frmCurr From Currency
      * @param toCurr  To Currency
-     * @return the current currency exchange rate
+     * @return {@link ExchangeRateGet}
      * @throws Exception if there's any issue while fetching from the external source
      */
     @Cacheable
