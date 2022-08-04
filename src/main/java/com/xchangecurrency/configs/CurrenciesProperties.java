@@ -13,5 +13,8 @@ import java.util.Map;
 @Setter
 public class CurrenciesProperties {
 
+    /**
+     * Supported map of currencies
+     **/
     private Map<String, String> currencies;
 }

@@ -24,11 +24,25 @@ public class CurrencyController {
 
     private final CurrencyService currencyService;
 
+    /**
+     * Available/Supported Currencies List API.
+     * Fetches the list of supported currencies.
+     *
+     * @return {@link AvailableCurrenciesGet}
+     */
     @GetMapping
     public AvailableCurrenciesGet getAvailableCurrencies() {
         return currencyService.getAvailableCurrencies();
     }
 
+    /**
+     * Currency Name API.
+     * Fetches the name of a currency for its code.
+     *
+     * @param currCode Currency Code
+     * @return {@link CurrencyGet}
+     * @throws ClientException if the currency code is invalid or not supported
+     */
     @GetMapping(UrlConst.GET_CURRENCY_NAME_URL)
     public CurrencyGet getCurrencyNameForCode(@PathVariable final String currCode) throws ClientException {
         return currencyService.getCurrencyNameForCode(currCode);

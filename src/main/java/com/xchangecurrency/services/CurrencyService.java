@@ -39,7 +39,7 @@ public class CurrencyService {
      *
      * @param currCode Currency Code
      * @return {@link CurrencyGet}
-     * @throws {@link ClientException} on Bad requests
+     * @throws ClientException if the currency code is invalid
      */
     public CurrencyGet getCurrencyNameForCode(@NonNull final String currCode) throws ClientException {
         // Validation

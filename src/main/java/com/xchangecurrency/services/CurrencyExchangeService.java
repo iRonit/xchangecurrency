@@ -47,7 +47,8 @@ public class CurrencyExchangeService {
      * @param frmCurr From Currency
      * @param toCurr  To Currency
      * @return {@link ExchangeRateGet}
-     * @throws {@link ClientException}, {@link ServerException}
+     * @throws ClientException if the currencies are invalid or not supported
+     * @throws ServerException if data is unable to be fetched from external source
      */
     @Cacheable
     public ExchangeRateGet getExchangeRate(@NonNull final String frmCurr, @NonNull final String toCurr) throws ClientException, ServerException {
@@ -67,7 +68,7 @@ public class CurrencyExchangeService {
      *
      * @param frmCurr From Currency
      * @param toCurr  To Currency
-     * @throws {@link ClientException} if the currencies are not supported
+     * @throws ClientException if the currencies are not supported
      */
     private void validateGetExchangeRateRequest(final String frmCurr, final String toCurr) throws ClientException {
         // Validate From Currency
@@ -88,7 +89,7 @@ public class CurrencyExchangeService {
      * @param frmCurr From Currency
      * @param toCurr  To Currency
      * @return the current exchange rate
-     * @throws {@link ServerException} if the value is unable to be fetched from the external source
+     * @throws ServerException if the value is unable to be fetched from the external source
      */
     private float fetchCurrentExchangeRate(final String frmCurr, final String toCurr) throws ServerException {
         // Fetch the html content that has the currency exchange rate info
@@ -104,7 +105,7 @@ public class CurrencyExchangeService {
      * @param frmCurr From Currency
      * @param toCurr  To Currency
      * @return HTML Body in String format
-     * @throws {@link ServerException} If no response body found
+     * @throws ServerException If no response body found
      */
     private String fireApiCallToExternal(final String frmCurr, final String toCurr) throws ServerException {
         String urlToCall = CURRENCY_ME_UK_URL + frmCurr.toLowerCase() + "/" + toCurr.toLowerCase();
@@ -121,7 +122,7 @@ public class CurrencyExchangeService {
      *
      * @param response Response Body in String format
      * @return Exchange Rate Value
-     * @throws {@link ServerException} If Exchange Rate information is not found or could not be parsed
+     * @throws ServerException If Exchange Rate information is not found or could not be parsed
      */
     private float extractExchangeRateFromResponse(final String response) throws ServerException {
         float exchangeRateValue;
