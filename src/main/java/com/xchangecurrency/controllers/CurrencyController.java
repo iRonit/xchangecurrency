@@ -3,6 +3,7 @@ package com.xchangecurrency.controllers;
 import com.xchangecurrency.constants.UrlConst;
 import com.xchangecurrency.dtos.AvailableCurrenciesGet;
 import com.xchangecurrency.dtos.CurrencyGet;
+import com.xchangecurrency.errorhandling.ClientException;
 import com.xchangecurrency.services.CurrencyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class CurrencyController {
     }
 
     @GetMapping(UrlConst.GET_CURRENCY_NAME_URL)
-    public CurrencyGet getCurrencyNameForCode(@PathVariable final String currCode) {
+    public CurrencyGet getCurrencyNameForCode(@PathVariable final String currCode) throws ClientException {
         return currencyService.getCurrencyNameForCode(currCode);
     }
 

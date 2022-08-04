@@ -4,6 +4,8 @@ import com.xchangecurrency.configs.CurrenciesProperties;
 import com.xchangecurrency.configs.CurrencyExchangeConfig;
 import com.xchangecurrency.dtos.CurrencyGet;
 import com.xchangecurrency.dtos.ExchangeRateGet;
+import com.xchangecurrency.errorhandling.ClientException;
+import com.xchangecurrency.errorhandling.ServerException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -45,10 +47,10 @@ public class CurrencyExchangeService {
      * @param frmCurr From Currency
      * @param toCurr  To Currency
      * @return {@link ExchangeRateGet}
-     * @throws Exception if there's any issue while fetching from the external source
+     * @throws {@link ClientException}, {@link ServerException}
      */
     @Cacheable
-    public ExchangeRateGet getExchangeRate(@NonNull final String frmCurr, @NonNull final String toCurr) throws Exception {
+    public ExchangeRateGet getExchangeRate(@NonNull final String frmCurr, @NonNull final String toCurr) throws ClientException, ServerException {
         // Validation
         validateGetExchangeRateRequest(frmCurr, toCurr);
 
@@ -65,18 +67,18 @@ public class CurrencyExchangeService {
      *
      * @param frmCurr From Currency
      * @param toCurr  To Currency
-     * @throws IllegalArgumentException if the currencies are not supported
+     * @throws {@link ClientException} if the currencies are not supported
      */
-    private void validateGetExchangeRateRequest(final String frmCurr, final String toCurr) throws IllegalArgumentException {
+    private void validateGetExchangeRateRequest(final String frmCurr, final String toCurr) throws ClientException {
         // Validate From Currency
         if (!currenciesProperties.getCurrencies().containsKey(frmCurr.toUpperCase())) {
             log.error("From Currency is not present in the data-map: {}", frmCurr);
-            throw new IllegalArgumentException("Unsupported currency: " + frmCurr);
+            throw new ClientException("Unsupported currency: " + frmCurr);
         }
         // Validate To Currency
         if (!currenciesProperties.getCurrencies().containsKey(toCurr.toUpperCase())) {
             log.error("To Currency is not present in the data-map: {}", toCurr);
-            throw new IllegalArgumentException("Unsupported currency: " + toCurr);
+            throw new ClientException("Unsupported currency: " + toCurr);
         }
     }
 
@@ -86,9 +88,9 @@ public class CurrencyExchangeService {
      * @param frmCurr From Currency
      * @param toCurr  To Currency
      * @return the current exchange rate
-     * @throws Exception if the value is unable to be fetched from the external source
+     * @throws {@link ServerException} if the value is unable to be fetched from the external source
      */
-    private float fetchCurrentExchangeRate(final String frmCurr, final String toCurr) throws Exception {
+    private float fetchCurrentExchangeRate(final String frmCurr, final String toCurr) throws ServerException {
         // Fetch the html content that has the currency exchange rate info
         String response = fireApiCallToExternal(frmCurr, toCurr);
 
@@ -102,15 +104,14 @@ public class CurrencyExchangeService {
      * @param frmCurr From Currency
      * @param toCurr  To Currency
      * @return HTML Body in String format
-     * @throws Exception If no response body found
+     * @throws {@link ServerException} If no response body found
      */
-    private String fireApiCallToExternal(final String frmCurr, final String toCurr) throws Exception {
+    private String fireApiCallToExternal(final String frmCurr, final String toCurr) throws ServerException {
         String urlToCall = CURRENCY_ME_UK_URL + frmCurr.toLowerCase() + "/" + toCurr.toLowerCase();
         ResponseEntity<String> response = restTemplate.exchange(urlToCall, GET, null, String.class);
         if (isBlank(response.getBody())) {
             log.error("Empty response body from : {}", urlToCall);
-            // TODO: Create custom exception
-            throw new Exception("Currency Exchange Rate information not found.");
+            throw new ServerException("Currency Exchange Rate information not found.");
         }
         return response.getBody();
     }
@@ -120,9 +121,9 @@ public class CurrencyExchangeService {
      *
      * @param response Response Body in String format
      * @return Exchange Rate Value
-     * @throws Exception If Exchange Rate information is not found or could not be parsed
+     * @throws {@link ServerException} If Exchange Rate information is not found or could not be parsed
      */
-    private float extractExchangeRateFromResponse(final String response) throws Exception {
+    private float extractExchangeRateFromResponse(final String response) throws ServerException {
         float exchangeRateValue;
         Pattern pattern = Pattern.compile("Latest Currency Exchange Rates:.*\\s(\\d+\\.\\d+).*", MULTILINE);
         Matcher matcher = pattern.matcher(response);
@@ -130,8 +131,7 @@ public class CurrencyExchangeService {
             exchangeRateValue = Float.parseFloat(matcher.group(1).trim());
         } else {
             log.error("Could not find the exchange rate value.");
-            // TODO: Create custom exception
-            throw new Exception("Currency Exchange Rate information not found.");
+            throw new ServerException("Currency Exchange Rate information not found.");
         }
         return exchangeRateValue;
     }

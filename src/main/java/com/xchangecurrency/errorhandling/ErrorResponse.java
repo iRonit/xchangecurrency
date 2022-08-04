@@ -1,0 +1,20 @@
+package com.xchangecurrency.errorhandling;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * HTTP Response when an Error/Exception occurs
+ *
+ * @author Ronit Pradhan
+ */
+@Data
+@Builder
+public class ErrorResponse {
+    private String url;
+    private String status;
+    private Date timestamp;
+    private String message;
+}

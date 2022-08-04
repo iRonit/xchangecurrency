@@ -3,6 +3,7 @@ package com.xchangecurrency.services;
 import com.xchangecurrency.configs.CurrenciesProperties;
 import com.xchangecurrency.dtos.AvailableCurrenciesGet;
 import com.xchangecurrency.dtos.CurrencyGet;
+import com.xchangecurrency.errorhandling.ClientException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
@@ -38,12 +39,13 @@ public class CurrencyService {
      *
      * @param currCode Currency Code
      * @return {@link CurrencyGet}
+     * @throws {@link ClientException} on Bad requests
      */
-    public CurrencyGet getCurrencyNameForCode(@NonNull final String currCode) {
+    public CurrencyGet getCurrencyNameForCode(@NonNull final String currCode) throws ClientException {
         // Validation
         if (!currenciesProperties.getCurrencies().containsKey(currCode.toUpperCase())) {
             log.error("Currency Code is not present in the data-map: {}", currCode);
-            throw new IllegalArgumentException("Unsupported currency: " + currCode);
+            throw new ClientException("Unsupported currency: " + currCode);
         }
 
         // Return
