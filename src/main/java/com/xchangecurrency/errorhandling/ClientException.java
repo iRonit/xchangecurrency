@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022 XChangeCurrency API.
+ *
+ */
 package com.xchangecurrency.errorhandling;
 
 import lombok.experimental.StandardException;
@@ -10,7 +14,7 @@ import lombok.experimental.StandardException;
 @StandardException
 public class ClientException extends Exception {
 
-    public ClientException(final String message) {
-        super(message);
-    }
+  public ClientException(final String message) {
+    super(message);
+  }
 }

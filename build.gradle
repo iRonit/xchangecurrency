@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'java'
+	id "com.diffplug.spotless" version "6.9.0"
 }
 
 group = 'com.xchangecurrency'
@@ -30,4 +31,27 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+spotless {
+	// optional: limit format enforcement to just the files changed by this feature branch
+	// ratchetFrom 'origin/master'
+
+	format 'misc', {
+		// define the files to apply `misc` to
+		target '*.gradle', '*.md', '.gitignore'
+
+		// define the steps to apply to those files
+		trimTrailingWhitespace()
+		indentWithTabs()
+		endWithNewline()
+	}
+	java {
+		endWithNewline()
+		removeUnusedImports()
+		googleJavaFormat()
+		licenseHeaderFile('.formatter/license-header')
+	}
+
+	compileJava.dependsOn 'spotlessApply'
 }

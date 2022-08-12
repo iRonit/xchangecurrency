@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022 XChangeCurrency API.
+ *
+ */
 package com.xchangecurrency.errorhandling;
 
 import lombok.Builder;
@@ -13,8 +17,11 @@ import java.util.Date;
 @Data
 @Builder
 public class ErrorResponse {
-    private String url;
-    private String status;
-    private Date timestamp;
-    private String message;
+  private String url;
+
+  private String status;
+
+  private Date timestamp;
+
+  private String message;
 }

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022 XChangeCurrency API.
+ *
+ */
 package com.xchangecurrency;
 
 import org.springframework.boot.SpringApplication;
@@ -8,8 +12,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class CurrencyExchangeApiApplication {
 
-	public static void main(final String[] args) {
-		SpringApplication.run(CurrencyExchangeApiApplication.class, args);
-	}
-
+  public static void main(final String[] args) {
+    SpringApplication.run(CurrencyExchangeApiApplication.class, args);
+  }
 }

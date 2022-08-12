@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022 XChangeCurrency API.
+ *
+ */
 package com.xchangecurrency.configs;
 
 import lombok.Getter;
@@ -12,9 +16,8 @@ import java.util.Map;
 @Getter
 @Setter
 public class CurrenciesProperties {
-
-    /**
-     * Supported map of currencies
-     **/
-    private Map<String, String> currencies;
+  /**
+   * Supported map of currencies
+   */
+  private Map<String, String> currencies;
 }

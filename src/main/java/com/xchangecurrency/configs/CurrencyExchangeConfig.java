@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022 XChangeCurrency API.
+ *
+ */
 package com.xchangecurrency.configs;
 
 import com.google.common.cache.CacheBuilder;
@@ -16,7 +20,6 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 @Configuration
 public class CurrencyExchangeConfig {
-
     public static final String CURRENCIES_CACHE = "currencies_cache";
 
     @Bean
@@ -26,15 +29,22 @@ public class CurrencyExchangeConfig {
 
     @Bean
     public CacheManager cacheManager() {
-        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager() {
-            @Override
-            @NonNull
-            protected Cache createConcurrentMapCache(@NonNull final String name) {
-                return new ConcurrentMapCache(name,
-                        CacheBuilder.newBuilder().expireAfterWrite(15, MINUTES).maximumSize(1000).build().asMap(),
-                        false);
-            }
-        };
+        ConcurrentMapCacheManager cacheManager =
+                new ConcurrentMapCacheManager() {
+
+                    @Override
+                    @NonNull
+                    protected Cache createConcurrentMapCache(@NonNull final String name) {
+                        return new ConcurrentMapCache(
+                                name,
+                                CacheBuilder.newBuilder()
+                                        .expireAfterWrite(15, MINUTES)
+                                        .maximumSize(1000)
+                                        .build()
+                                        .asMap(),
+                                false);
+                    }
+                };
         cacheManager.setCacheNames(List.of(CURRENCIES_CACHE));
         return cacheManager;
     }
