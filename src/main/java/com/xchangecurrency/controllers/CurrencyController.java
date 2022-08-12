@@ -45,7 +45,7 @@ public class CurrencyController {
    */
   @GetMapping(UrlConst.GET_CURRENCY_NAME_URL)
   public CurrencyGet getCurrencyNameForCode(@PathVariable final String currCode)
-          throws ClientException {
+      throws ClientException {
     return currencyService.getCurrencyNameForCode(currCode);
   }
 }

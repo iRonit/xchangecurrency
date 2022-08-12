@@ -4,10 +4,9 @@
  */
 package com.xchangecurrency.errorhandling;
 
+import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * HTTP Response when an Error/Exception occurs

@@ -31,17 +31,17 @@ public class CurrencyService {
    */
   public AvailableCurrenciesGet getAvailableCurrencies() {
     return AvailableCurrenciesGet.builder()
-            .total(currenciesProperties.getCurrencies().size())
-            .availableCurrencies(
-                    currenciesProperties.getCurrencies().keySet().stream()
-                            .map(
-                                    key ->
-                                            CurrencyGet.builder()
-                                                    .code(key)
-                                                    .name(currenciesProperties.getCurrencies().get(key))
-                                                    .build())
-                            .toList())
-            .build();
+        .total(currenciesProperties.getCurrencies().size())
+        .availableCurrencies(
+            currenciesProperties.getCurrencies().keySet().stream()
+                .map(
+                    key ->
+                        CurrencyGet.builder()
+                            .code(key)
+                            .name(currenciesProperties.getCurrencies().get(key))
+                            .build())
+                .toList())
+        .build();
   }
 
   /**
@@ -60,8 +60,8 @@ public class CurrencyService {
 
     // Return
     return CurrencyGet.builder()
-            .code(currCode.toUpperCase())
-            .name(currenciesProperties.getCurrencies().get(currCode.toUpperCase()))
-            .build();
+        .code(currCode.toUpperCase())
+        .name(currenciesProperties.getCurrencies().get(currCode.toUpperCase()))
+        .build();
   }
 }

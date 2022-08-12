@@ -30,15 +30,15 @@ public class CurrencyExchangeController {
    * Exchange Rate API. Gets the latest foreign currency exchange rate.
    *
    * @param frmCurr From Currency
-   * @param toCurr  To Currency
+   * @param toCurr To Currency
    * @return {@link ExchangeRateGet}
    * @throws ClientException if the currencies are invalid or not supported
    * @throws ServerException if data is unable to be fetched from external source
    */
   @GetMapping(UrlConst.GET_CURRENCY_EXCHANGE_RATE_URL)
   public ExchangeRateGet getCurrencyExchangeRate(
-          @PathVariable final String frmCurr, @PathVariable final String toCurr)
-          throws ServerException, ClientException {
+      @PathVariable final String frmCurr, @PathVariable final String toCurr)
+      throws ServerException, ClientException {
     return currencyExchangeService.getExchangeRate(frmCurr, toCurr);
   }
 }

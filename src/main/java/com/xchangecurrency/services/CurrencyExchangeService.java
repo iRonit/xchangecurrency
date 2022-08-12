@@ -4,12 +4,20 @@
  */
 package com.xchangecurrency.services;
 
+import static java.util.regex.Pattern.MULTILINE;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.springframework.http.HttpMethod.GET;
+
 import com.xchangecurrency.configs.CurrenciesProperties;
 import com.xchangecurrency.configs.CurrencyExchangeConfig;
 import com.xchangecurrency.dtos.CurrencyGet;
 import com.xchangecurrency.dtos.ExchangeRateGet;
 import com.xchangecurrency.errorhandling.ClientException;
 import com.xchangecurrency.errorhandling.ServerException;
+import java.time.Instant;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
@@ -18,15 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.Instant;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static java.util.regex.Pattern.MULTILINE;
-import static org.apache.commons.lang3.StringUtils.isBlank;
-import static org.springframework.http.HttpMethod.GET;
 
 /**
  * Handles the logic around Currency Exchange.
@@ -48,44 +47,44 @@ public class CurrencyExchangeService {
    * Gets the Current Currency Exchange Rate from the External Source Caches the result
    *
    * @param frmCurr From Currency
-   * @param toCurr  To Currency
+   * @param toCurr To Currency
    * @return {@link ExchangeRateGet}
    * @throws ClientException if the currencies are invalid or not supported
    * @throws ServerException if data is unable to be fetched from external source
    */
   @Cacheable
   public ExchangeRateGet getExchangeRate(
-          @NonNull final String frmCurr, @NonNull final String toCurr)
-          throws ClientException, ServerException {
+      @NonNull final String frmCurr, @NonNull final String toCurr)
+      throws ClientException, ServerException {
     // Validation
     validateGetExchangeRateRequest(frmCurr, toCurr);
 
     // Fetch and Return
     return ExchangeRateGet.builder()
-            .fromCurrency(
-                    CurrencyGet.builder()
-                            .code(frmCurr.toUpperCase())
-                            .name(currenciesProperties.getCurrencies().get(frmCurr.toUpperCase()))
-                            .build())
-            .toCurrency(
-                    CurrencyGet.builder()
-                            .code(toCurr.toUpperCase())
-                            .name(currenciesProperties.getCurrencies().get(toCurr.toUpperCase()))
-                            .build())
-            .amount(fetchCurrentExchangeRate(frmCurr, toCurr))
-            .lastUpdated(Date.from(Instant.now()))
-            .build();
+        .fromCurrency(
+            CurrencyGet.builder()
+                .code(frmCurr.toUpperCase())
+                .name(currenciesProperties.getCurrencies().get(frmCurr.toUpperCase()))
+                .build())
+        .toCurrency(
+            CurrencyGet.builder()
+                .code(toCurr.toUpperCase())
+                .name(currenciesProperties.getCurrencies().get(toCurr.toUpperCase()))
+                .build())
+        .amount(fetchCurrentExchangeRate(frmCurr, toCurr))
+        .lastUpdated(Date.from(Instant.now()))
+        .build();
   }
 
   /**
    * Validate the currencies in the request parameter.
    *
    * @param frmCurr From Currency
-   * @param toCurr  To Currency
+   * @param toCurr To Currency
    * @throws ClientException if the currencies are not supported
    */
   private void validateGetExchangeRateRequest(final String frmCurr, final String toCurr)
-          throws ClientException {
+      throws ClientException {
     // Validate From Currency
     if (!currenciesProperties.getCurrencies().containsKey(frmCurr.toUpperCase())) {
       log.error("From Currency is not present in the data-map: {}", frmCurr);
@@ -102,12 +101,12 @@ public class CurrencyExchangeService {
    * Fetch and Parse the Current Currency Exchange Rate from External Source
    *
    * @param frmCurr From Currency
-   * @param toCurr  To Currency
+   * @param toCurr To Currency
    * @return the current exchange rate
    * @throws ServerException if the value is unable to be fetched from the external source
    */
   private float fetchCurrentExchangeRate(final String frmCurr, final String toCurr)
-          throws ServerException {
+      throws ServerException {
     // Fetch the html content that has the currency exchange rate info
     String response = fireApiCallToExternal(frmCurr, toCurr);
 
@@ -119,12 +118,12 @@ public class CurrencyExchangeService {
    * Call the External URL to fetch the HTML body that holds the currency exchange information.
    *
    * @param frmCurr From Currency
-   * @param toCurr  To Currency
+   * @param toCurr To Currency
    * @return HTML Body in String format
    * @throws ServerException If no response body found
    */
   private String fireApiCallToExternal(final String frmCurr, final String toCurr)
-          throws ServerException {
+      throws ServerException {
     String urlToCall = CURRENCY_ME_UK_URL + frmCurr.toLowerCase() + "/" + toCurr.toLowerCase();
     ResponseEntity<String> response = restTemplate.exchange(urlToCall, GET, null, String.class);
     if (isBlank(response.getBody())) {
@@ -144,7 +143,7 @@ public class CurrencyExchangeService {
   private float extractExchangeRateFromResponse(final String response) throws ServerException {
     float exchangeRateValue;
     Pattern pattern =
-            Pattern.compile("Latest Currency Exchange Rates:.*\\s(\\d+\\.\\d+).*", MULTILINE);
+        Pattern.compile("Latest Currency Exchange Rates:.*\\s(\\d+\\.\\d+).*", MULTILINE);
     Matcher matcher = pattern.matcher(response);
     if (matcher.find()) {
       exchangeRateValue = Float.parseFloat(matcher.group(1).trim());

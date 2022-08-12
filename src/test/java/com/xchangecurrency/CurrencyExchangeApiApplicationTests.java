@@ -5,5 +5,4 @@
 package com.xchangecurrency;
 
 // @SpringBootTest
-class CurrencyExchangeApiApplicationTests {
-}
+class CurrencyExchangeApiApplicationTests {}
