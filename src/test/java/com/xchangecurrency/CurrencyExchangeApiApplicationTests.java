@@ -1,6 +1,9 @@
+/*
+ * Copyright (c) 2022 XChangeCurrency API.
+ *
+ */
 package com.xchangecurrency;
 
-//@SpringBootTest
+// @SpringBootTest
 class CurrencyExchangeApiApplicationTests {
-
 }
