@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'java'
+	id 'jacoco'
 	id "com.diffplug.spotless" version "6.9.0"
 }
 
@@ -33,8 +34,22 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+// JaCoCo
+test {
+	finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+}
+
+jacoco {
+	toolVersion = "0.8.8"
+}
+
+// Spotless
 spotless {
-	// optional: limit format enforcement to just the files changed by this feature branch
+	// Optional: limit format enforcement to just the files changed by this feature branch
 	// ratchetFrom 'origin/master'
 
 	format 'misc', {
@@ -46,6 +61,7 @@ spotless {
 		indentWithTabs()
 		endWithNewline()
 	}
+
 	java {
 		endWithNewline()
 		removeUnusedImports()
