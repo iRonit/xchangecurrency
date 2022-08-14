@@ -5,12 +5,13 @@
 package com.xchangecurrency.services;
 
 import com.xchangecurrency.configs.CurrenciesProperties;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 public abstract class AbstractServiceTest {
     @Mock
     protected RestTemplate restTemplate;

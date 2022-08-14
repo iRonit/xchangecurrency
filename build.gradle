@@ -48,7 +48,6 @@ jacocoTestReport {
                     "**/configs/*",
                     "**/dtos/*",
                     "**/errorhandling/*"
-
             ])
         }))
     }
