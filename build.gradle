@@ -45,8 +45,10 @@ jacocoTestReport {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     "com/xchangecurrency/**/CurrencyExchangeApiApplication.class",
+                    "**/configs/*",
                     "**/dtos/*",
-                    "**/configs/*"
+                    "**/errorhandling/*"
+
             ])
         }))
     }
