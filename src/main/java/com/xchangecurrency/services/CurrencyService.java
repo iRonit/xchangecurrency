@@ -5,6 +5,7 @@
 package com.xchangecurrency.services;
 
 import com.xchangecurrency.configs.CurrenciesProperties;
+import com.xchangecurrency.constants.ExceptionMessages;
 import com.xchangecurrency.dtos.AvailableCurrenciesGet;
 import com.xchangecurrency.dtos.CurrencyGet;
 import com.xchangecurrency.errorhandling.ClientException;
@@ -31,8 +32,10 @@ public class CurrencyService {
      */
     public AvailableCurrenciesGet getAvailableCurrencies() {
         return AvailableCurrenciesGet.builder().total(currenciesProperties.getCurrencies().size())
-                .availableCurrencies(currenciesProperties.getCurrencies().keySet().stream().map(key -> CurrencyGet
-                        .builder().code(key).name(currenciesProperties.getCurrencies().get(key)).build()).toList())
+                .availableCurrencies(currenciesProperties.getCurrencies().keySet().stream().sorted()
+                        .map(key -> CurrencyGet.builder().code(key).name(currenciesProperties.getCurrencies().get(key))
+                                .build())
+                        .toList())
                 .build();
     }
 
@@ -47,7 +50,7 @@ public class CurrencyService {
         // Validation
         if (!currenciesProperties.getCurrencies().containsKey(currCode.toUpperCase())) {
             log.error("Currency Code is not present in the data-map: {}", currCode);
-            throw new ClientException("Unsupported currency: " + currCode);
+            throw new ClientException(ExceptionMessages.UNSUPPORTED_CURRENCY + currCode);
         }
 
         // Return

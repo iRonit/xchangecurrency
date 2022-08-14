@@ -20,4 +20,7 @@ public abstract class AbstractServiceTest {
 
     @InjectMocks
     protected CurrencyExchangeService currencyExchangeService;
+
+    @InjectMocks
+    protected CurrencyService currencyService;
 }
