@@ -10,6 +10,7 @@ import static org.springframework.http.HttpMethod.GET;
 
 import com.xchangecurrency.configs.CurrenciesProperties;
 import com.xchangecurrency.configs.CurrencyExchangeConfig;
+import com.xchangecurrency.constants.ExceptionMessages;
 import com.xchangecurrency.dtos.CurrencyGet;
 import com.xchangecurrency.dtos.ExchangeRateGet;
 import com.xchangecurrency.errorhandling.ClientException;
@@ -37,7 +38,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 @Slf4j
 public class CurrencyExchangeService {
-    private static final String CURRENCY_ME_UK_URL = "https://www.currency.me.uk/convert/";
+    public static final String CURRENCY_ME_UK_URL = "https://www.currency.me.uk/convert/";
 
     private final RestTemplate restTemplate;
 
@@ -78,12 +79,12 @@ public class CurrencyExchangeService {
         // Validate From Currency
         if (!currenciesProperties.getCurrencies().containsKey(frmCurr.toUpperCase())) {
             log.error("From Currency is not present in the data-map: {}", frmCurr);
-            throw new ClientException("Unsupported currency: " + frmCurr);
+            throw new ClientException(ExceptionMessages.UNSUPPORTED_CURRENCY + frmCurr);
         }
         // Validate To Currency
         if (!currenciesProperties.getCurrencies().containsKey(toCurr.toUpperCase())) {
             log.error("To Currency is not present in the data-map: {}", toCurr);
-            throw new ClientException("Unsupported currency: " + toCurr);
+            throw new ClientException(ExceptionMessages.UNSUPPORTED_CURRENCY + toCurr);
         }
     }
 
@@ -116,7 +117,7 @@ public class CurrencyExchangeService {
         ResponseEntity<String> response = restTemplate.exchange(urlToCall, GET, null, String.class);
         if (isBlank(response.getBody())) {
             log.error("Empty response body from : {}", urlToCall);
-            throw new ServerException("Currency Exchange Rate information not found.");
+            throw new ServerException(ExceptionMessages.CURRENCY_EXCHANGE_INFO_NOT_FOUND);
         }
         return response.getBody();
     }
@@ -136,7 +137,7 @@ public class CurrencyExchangeService {
             exchangeRateValue = Float.parseFloat(matcher.group(1).trim());
         } else {
             log.error("Could not find the exchange rate value.");
-            throw new ServerException("Currency Exchange Rate information not found.");
+            throw new ServerException(ExceptionMessages.CURRENCY_EXCHANGE_INFO_NOT_FOUND);
         }
         return exchangeRateValue;
     }
