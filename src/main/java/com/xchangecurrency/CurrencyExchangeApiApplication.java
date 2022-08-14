@@ -12,7 +12,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class CurrencyExchangeApiApplication {
 
-  public static void main(final String[] args) {
-    SpringApplication.run(CurrencyExchangeApiApplication.class, args);
-  }
+    public static void main(final String[] args) {
+        SpringApplication.run(CurrencyExchangeApiApplication.class, args);
+    }
 }

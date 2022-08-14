@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @Builder
 public class AvailableCurrenciesGet {
-  private int total;
+    private int total;
 
-  private List<CurrencyGet> availableCurrencies;
+    private List<CurrencyGet> availableCurrencies;
 }

@@ -14,7 +14,7 @@ import lombok.experimental.StandardException;
 @StandardException
 public class ClientException extends Exception {
 
-  public ClientException(final String message) {
-    super(message);
-  }
+    public ClientException(final String message) {
+        super(message);
+    }
 }

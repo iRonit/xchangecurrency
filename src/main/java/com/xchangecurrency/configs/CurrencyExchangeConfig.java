@@ -19,32 +19,26 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class CurrencyExchangeConfig {
-  public static final String CURRENCIES_CACHE = "currencies_cache";
+    public static final String CURRENCIES_CACHE = "currencies_cache";
 
-  @Bean
-  public RestTemplate restTemplate() {
-    return new RestTemplate();
-  }
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
-  @Bean
-  public CacheManager cacheManager() {
-    ConcurrentMapCacheManager cacheManager =
-        new ConcurrentMapCacheManager() {
+    @Bean
+    public CacheManager cacheManager() {
+        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager() {
 
-          @Override
-          @NonNull
-          protected Cache createConcurrentMapCache(@NonNull final String name) {
-            return new ConcurrentMapCache(
-                name,
-                CacheBuilder.newBuilder()
-                    .expireAfterWrite(15, MINUTES)
-                    .maximumSize(1000)
-                    .build()
-                    .asMap(),
-                false);
-          }
+            @Override
+            @NonNull
+            protected Cache createConcurrentMapCache(@NonNull final String name) {
+                return new ConcurrentMapCache(name,
+                        CacheBuilder.newBuilder().expireAfterWrite(15, MINUTES).maximumSize(1000).build().asMap(),
+                        false);
+            }
         };
-    cacheManager.setCacheNames(List.of(CURRENCIES_CACHE));
-    return cacheManager;
-  }
+        cacheManager.setCacheNames(List.of(CURRENCIES_CACHE));
+        return cacheManager;
+    }
 }

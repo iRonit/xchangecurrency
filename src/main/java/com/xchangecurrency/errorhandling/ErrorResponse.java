@@ -16,11 +16,11 @@ import lombok.Data;
 @Data
 @Builder
 public class ErrorResponse {
-  private String url;
+    private String url;
 
-  private String status;
+    private String status;
 
-  private Date timestamp;
+    private Date timestamp;
 
-  private String message;
+    private String message;
 }

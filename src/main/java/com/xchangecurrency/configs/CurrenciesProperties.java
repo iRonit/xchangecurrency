@@ -15,6 +15,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 public class CurrenciesProperties {
-  /** Supported map of currencies */
-  private Map<String, String> currencies;
+    /** Supported map of currencies */
+    private Map<String, String> currencies;
 }

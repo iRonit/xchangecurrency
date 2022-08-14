@@ -7,15 +7,17 @@ package com.xchangecurrency.dtos;
 import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
 public class ExchangeRateGet {
-  private CurrencyGet fromCurrency;
+    private CurrencyGet fromCurrency;
 
-  private CurrencyGet toCurrency;
+    private CurrencyGet toCurrency;
 
-  private float amount;
+    private float amount;
 
-  private Date lastUpdated;
+    @EqualsAndHashCode.Exclude
+    private Date lastUpdated;
 }
