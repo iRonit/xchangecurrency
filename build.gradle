@@ -51,6 +51,11 @@ jacocoTestReport {
             ])
         }))
     }
+    reports {
+        xml.enabled false
+        csv.enabled true
+        html.enabled true
+    }
 }
 
 jacoco {
@@ -81,10 +86,4 @@ spotless {
     }
 
     compileJava.dependsOn 'spotlessCheck'
-}
-
-// Gradle Build Scan
-buildScan {
-    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-    termsOfServiceAgree = 'yes'
 }
