@@ -51,11 +51,6 @@ jacocoTestReport {
             ])
         }))
     }
-    reports {
-        xml.enabled false
-        csv.enabled true
-        html.enabled true
-    }
 }
 
 jacoco {
