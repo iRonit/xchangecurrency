@@ -38,4 +38,9 @@ jobs:
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: build --scan
+        arguments: build sonarqube --scan
+      env:
+        # Needed to get some information about the pull request, if any
+        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+        # SonarCloud access token should be generated from https://sonarcloud.io/account/security/
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
