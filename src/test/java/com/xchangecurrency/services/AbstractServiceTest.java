@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @ExtendWith(SpringExtension.class)
 public abstract class AbstractServiceTest {
+
     @Mock
     protected RestTemplate restTemplate;
 

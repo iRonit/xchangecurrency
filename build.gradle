@@ -80,5 +80,5 @@ spotless {
         licenseHeaderFile('.formatter/license-header')
     }
 
-    compileJava.dependsOn 'spotlessApply'
+    compileJava.dependsOn 'spotlessCheck'
 }
