@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @ExtendWith(SpringExtension.class)
 public abstract class AbstractServiceTest {
 
-    static final String TESTING = "Making a change to test merge";
+            static final String TESTING = "Making a change to test merge";
 
     @Mock
     protected RestTemplate restTemplate;
