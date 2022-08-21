@@ -28,6 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -35,12 +38,10 @@ jobs:
         distribution: 'adopt'
     - name: Make gradlew executable
       run: chmod +x ./gradlew
-    - name: Build with Gradle
+    - name: Build and analyze
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: build --scan
-    - name: Analyze with SonarCloud
-      uses: sonarsource/sonarcloud-github-action@v1.3
+        arguments: build sonarqube --info
       env:
         # Needed to get some information about the pull request, if any
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
